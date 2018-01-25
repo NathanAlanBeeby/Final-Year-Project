@@ -10,11 +10,13 @@
 class HUD
 {
 public:
+
+	
 	sf::CircleShape PlayerIcon;
 
-	sf::RectangleShape clockOuterBox, clockDigital, date;
+	sf::RectangleShape clockOuterBox, clockDigital, date, routineBox;
 
-	sf::RectangleShape PlayerBox, noHealth, health, noXP, XP, prisonPound;
+	sf::RectangleShape PlayerBox, noHealth, health, noXP, XP, prisonPound, emptyGRep, emptyPRep, GRep, PRep;
 
 	
 
@@ -26,18 +28,23 @@ public:
 
 	sf::RectangleShape MissionsBox, SkillsBox, InventoryBox, characterBox, CashBox;
 
+	sf::RectangleShape CraftButton, CraftBox, closeCraft, craftInputBox, submitCraft;
+
+
 	sf::Clock HUDClock;
 
 	sf::Texture playerTexture, halfHealthPlayer, lowHealthPlayer, poundTexture;
 	sf::Texture Skills, Inventory, Missions;
-
-	sf::Font font, HUDFont, HUDFont2;
+	sf::Texture characterTexture;
+	sf::Font font, HUDFont, HUDFont2, RoutineFont;
 
 
 	bool MisOpen = false;
 	bool SkilOpen = false;
 	bool InvOpen = false;
+	bool RepOpen = false;
 
+	bool craftOpen = false;
 
 	float healthBar = 210;
 	float XPcount = 0;
@@ -50,6 +57,10 @@ public:
 	int MisOpenCount = 0; // way of knowing if the player has hit the key twice
 	int InvOpenCount = 0; // way of knowing if the player has hit the key twice
 	int SkilOpenCount = 0; // way of knowing if the player has hit the key twice
+	int RepOpenCount = 0;
+	int craftOpenCount = 0;
+	
+
 
 	int HUDTime = 0; // this will be the time for the screen
 	int HUDTimeMinute = 0; // hudtime minutes
@@ -57,7 +68,8 @@ public:
 	
 	int prisonMoney = 0; // the cash you start with
 
-	
+	int guardRep = 100;
+	int prisonerRep = 100;
 
 	float night = 100; // box hue
 
@@ -73,9 +85,11 @@ public:
 	void drawMissions(sf::View &view, sf::RenderWindow &window);
 	void drawSkills(sf::View &view, sf::RenderWindow &window);
 	void drawInventory(sf::View &view, sf::RenderWindow &window);
+	void drawReputation(sf::View &view, sf::RenderWindow &window);
+	void drawCraft(sf::View &view, sf::RenderWindow &window);
 	void drawHUD(sf::View &view, sf::RenderWindow &window);
 	void HUDUserInput(sf::View &view, sf::RenderWindow &window);
-
+	void Times(sf::View &view, sf::RenderWindow &window);
 
 	
 

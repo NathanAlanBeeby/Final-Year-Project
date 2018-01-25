@@ -1,7 +1,6 @@
 #include "Furniture.h"
 #include <iostream>
 
-
 Furniture::Furniture()
 {
 }
@@ -37,7 +36,9 @@ void Furniture::Doors(sf::RenderWindow &window) {
 
 	}
 
-	std::vector<sf::RectangleShape>  DoorOfCell(5, sf::RectangleShape(cellDoor)); // an array of 5 cell doorsa
+	
+
+	std::vector<sf::RectangleShape>  DoorOfCell(5, sf::RectangleShape(cellDoor)); // an array of 5 cell doors
 
 	for (int i = 0; i < DoorOfCell.size(); i++) {
 		
@@ -59,7 +60,7 @@ void Furniture::Doors(sf::RenderWindow &window) {
 		window.draw(DoorOfCell[i]);
 	}
 
-	std::vector<sf::RectangleShape>  DoorAver(6, sf::RectangleShape(averageDoor)); // an array of 5 cell doorsa
+	std::vector<sf::RectangleShape>  DoorAver(6, sf::RectangleShape(averageDoor)); // an array of 5 cell doors
 
 	for (int i = 0; i < DoorAver.size(); i++) {
 		DoorAver[i].setSize(sf::Vector2f(64, 64));
@@ -67,7 +68,10 @@ void Furniture::Doors(sf::RenderWindow &window) {
 
 	}
 
-	DoorAver[0].setPosition((8 * 64), (10 * 64));
+	DoorAver[0].setPosition((9 * 64), (10 * 64)); // shower door
+	
+	DoorAver[0].setRotation(90);
+
 	DoorAver[1].setPosition((2 * 64), (24 * 64));
 	DoorAver[2].setPosition((13 * 64), (24 * 64));
 	DoorAver[3].setPosition((2 * 64), (34 * 64));
@@ -78,7 +82,7 @@ void Furniture::Doors(sf::RenderWindow &window) {
 		window.draw(DoorAver[i]);
 	}
 
-	std::vector<sf::RectangleShape>  DoorSolitary(17, sf::RectangleShape(solitaryDoor)); // an array of 5 cell doorsa
+	std::vector<sf::RectangleShape>  DoorSolitary(19, sf::RectangleShape(solitaryDoor)); // an array of 5 cell doorsa
 
 	for (int i = 0; i < DoorSolitary.size(); i++) {
 		DoorSolitary[i].setSize(sf::Vector2f(64, 64));
@@ -88,17 +92,30 @@ void Furniture::Doors(sf::RenderWindow &window) {
 
 	DoorSolitary[0].setPosition((2 * 64), (38 * 64));
 	DoorSolitary[1].setPosition((2 * 64), (61 * 64));
-	DoorSolitary[2].setPosition((21 * 64), (59 * 64));
+
+	DoorSolitary[2].setPosition((22 * 64), (59 * 64)); // yard door
+	DoorSolitary[2].setRotation(90);
 
 	DoorSolitary[3].setPosition((27 * 64), (58 * 64));
 	DoorSolitary[4].setPosition((33 * 64), (54 * 64));
 	DoorSolitary[5].setPosition((27 * 64), (54 * 64));
 	DoorSolitary[6].setPosition((42 * 64), (58 * 64));
 
-	DoorSolitary[7].setPosition((33 * 64), (17 * 64));
-	DoorSolitary[8].setPosition((37 * 64), (5 * 64));
-	DoorSolitary[9].setPosition((37 * 64), (12 * 64));
-	DoorSolitary[10].setPosition((37 * 64), (20 * 64));
+	DoorSolitary[7].setPosition((34 * 64), (17 * 64));
+	
+	DoorSolitary[7].rotate(90);
+	
+	DoorSolitary[8].setPosition((38 * 64), (5 * 64)); // med office 1
+
+	DoorSolitary[8].setRotation(90);
+
+	DoorSolitary[9].setPosition((38 * 64), (12 * 64)); // med office 2
+
+	DoorSolitary[9].setRotation(90);
+
+	DoorSolitary[10].setPosition((38 * 64), (20 * 64)); // wardens office
+
+	DoorSolitary[10].setRotation(90);
 
 	DoorSolitary[11].setPosition((2 * 64), (65 * 64));
 	DoorSolitary[12].setPosition((6 * 64), (65 * 64));
@@ -106,6 +123,12 @@ void Furniture::Doors(sf::RenderWindow &window) {
 	DoorSolitary[14].setPosition((14 * 64), (65 * 64));
 	DoorSolitary[15].setPosition((18 * 64), (65 * 64));
 	DoorSolitary[16].setPosition((22 * 64), (65 * 64));
+
+	DoorSolitary[17].setPosition((45 * 64), (36 * 64));
+	DoorSolitary[17].setRotation(90);
+
+	DoorSolitary[18].setPosition((45 * 64), (56 * 64));
+	DoorSolitary[18].setRotation(90);
 
 	for (int i = 0; i < DoorSolitary.size(); i++) {
 		window.draw(DoorSolitary[i]);

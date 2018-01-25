@@ -158,30 +158,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="b2GLDraw.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Furniture.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Instructions.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="OptionsMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Prisoner.cpp" />
+    <ClCompile Include="prisonWalls.cpp" />
+    <ClCompile Include="Routine.cpp" />
     <ClCompile Include="SkillItems.cpp" />
     <ClCompile Include="SkillMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="b2GLDraw.h" />
     <ClInclude Include="Background.h" />
-    <ClInclude Include="Collision.hpp" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Furniture.h" />
-    <ClInclude Include="glext.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="Instructions.h" />
     <ClInclude Include="mapLoader.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="OptionsMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Prisoner.h" />
+    <ClInclude Include="prisonWalls.h" />
+    <ClInclude Include="Routine.h" />
     <ClInclude Include="SkillItems.h" />
     <ClInclude Include="SkillMenu.h" />
   </ItemGroup>

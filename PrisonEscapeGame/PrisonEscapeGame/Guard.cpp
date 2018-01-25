@@ -1,6 +1,5 @@
 #include "Guard.h"
 #include <iostream>
-#include "Collision.hpp"
 
 Guard::Guard()
 {
@@ -19,15 +18,19 @@ Guard::~Guard()
 void Guard::drawGuard(sf::RenderWindow &window) {
 	sf::Vector2i GuardAnim(1, Down);
 
-	Collision::CreateTextureAndBitmask(guardTexture, "../assets/image_assets/guard_images.png");
 	if (!guardTexture.loadFromFile("../assets/image_assets/guard_images.png")) {
 		std::cout << "Error could not load prisoner texture" << std::endl;
 		system("pause");
 	}
+
+
 	guardSprite.setTexture(guardTexture);
 
-	int guardState = guardIDLE; // setting the player defaultly to IDLE
+	 guardPosition.x = guardSprite.getPosition().x;
+	 guardPosition.y = guardSprite.getPosition().y;
 
+
+	int guardState = guardIDLE; // setting the player defaultly to IDLE
 
 
 
@@ -86,9 +89,6 @@ void Guard::drawGuard(sf::RenderWindow &window) {
 		lastGuardPosition = Idle;
 	}
 
-
-
-
 	GuardAnim.x++;
 	if (GuardAnim.x * 64 >= guardTexture.getSize().x) { // once the sprite reaches the end of the sprite sheet, reset to 0 again
 		GuardAnim.x = 0;
@@ -97,11 +97,21 @@ void Guard::drawGuard(sf::RenderWindow &window) {
 	guardSprite.setTextureRect(sf::IntRect(GuardAnim.x * 64, GuardAnim.y * 64, 64, 64)); // cropping the image with the position and size of the image 
 
 	if(guardHealth > 0){
+
 	window.draw(guardSprite);
+	
 	}
+	
+	
+	//sf::Vector2f guardSize(64, 64);
+
+	//Collision(guardPosition, guardSize);
 }
 
-
+//void Guard::Collision(sf::Vector2f guardPosition, sf::Vector2f Size) {
+//	//std::cout << "Guard Position - X: " << guardPosition.x << ", Y:" << guardPosition.y << std::endl; //getting the guards position for collision
+//	//std::cout << "Guard Size - X: " << Size.x << ", Y:" << Size.y << std::endl;
+//}
 
 void Guard::guardState() {
 

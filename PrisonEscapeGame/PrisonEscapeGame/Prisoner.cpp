@@ -1,6 +1,6 @@
 #include "Prisoner.h"
 #include <iostream>
-#include "Collision.hpp"
+
 
 Prisoner::Prisoner()
 {
@@ -19,16 +19,14 @@ Prisoner::~Prisoner()
 void Prisoner::drawPrisoner(sf::RenderWindow &window) {
 	sf::Vector2i PrisonAnim(1, Down);
 	
-	Collision::CreateTextureAndBitmask(prisonerTexture, "../assets/image_assets/prisoner_images.png");
 	if (!prisonerTexture.loadFromFile("../assets/image_assets/prisoner_images.png")) {
 		std::cout << "Error could not load prisoner texture" << std::endl;
 		system("pause");
 }
 	prisonerSprite.setTexture(prisonerTexture);
 	
-
-	
-	
+	 prisonerPosition.x = prisonerSprite.getPosition().x;
+	 prisonerPosition.y = prisonerSprite.getPosition().y;
 
 	std::string SecondsString = std::to_string(prisonTime);
 	sf::Time TimeElapsed = PrisonClock.getElapsedTime(); // setting the time to the hud clock, so it can count seconds
@@ -67,7 +65,7 @@ void Prisoner::drawPrisoner(sf::RenderWindow &window) {
 			}
 		}
 		else if (PrisonMove == 3) { // Left Facing Prisoner
-			if (prisonerSprite.getPosition().y < 4352) {
+			if (prisonerSprite.getPosition().y < 4416) {
 				PrisonAnim.y = Down;
 				movePrisoner('d', Speed);
 				lastPrisonerPosition = Down;
@@ -100,7 +98,8 @@ void Prisoner::drawPrisoner(sf::RenderWindow &window) {
 		if (prisonerHealth > 0) {
 			window.draw(prisonerSprite);
 		}
-		
+	//	sf::Vector2f prisonerSize(64, 64);
+		//Collision(prisonerPosition, prisonerSize);
 }
 
 
@@ -108,6 +107,11 @@ void Prisoner::drawPrisoner(sf::RenderWindow &window) {
 void Prisoner::prisonerState() {
 
 }
+
+//void Prisoner::Collision(sf::Vector2f prisonerPosition, sf::Vector2f Size) {
+	//std::cout << "Prisoner Position - X: " << prisonerPosition.x << ", Y:" << prisonerPosition.y << std::endl; // getting the prisoner position and size to get the collision bounds
+	//std::cout << "Prisoner Size - X: " << Size.x << ", Y:" << Size.y << std::endl;
+//}
 
 void Prisoner::movePrisoner(char direction, float moveSpeed) {
 	if (direction == 'u') {

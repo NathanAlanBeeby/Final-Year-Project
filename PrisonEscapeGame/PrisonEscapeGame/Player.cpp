@@ -1,30 +1,34 @@
 #include "Player.h"
-#include "Prisoner.h"
-#include "Guard.h"
 
 
 
-void Player::drawPlayer(b2World& world, sf::View view, sf::RenderWindow &window) {
-	Collision::CreateTextureAndBitmask(spriteTexture, "../assets/image_assets/sprite_images.png");
+	void Player::drawPlayer(sf::View view, sf::RenderWindow &window) {
 	if (!spriteTexture.loadFromFile("../assets/image_assets/sprite_images.png"))
-		std::cerr << "Error";
+			std::cerr << "Error";
 	characterSprite.setTexture(spriteTexture);
-
+	
 	playerKeyboardMovement(view, window);
 
+
+	playerPosition.x = characterSprite.getPosition().x;
+	playerPosition.y = characterSprite.getPosition().y;
 	
+	//sf::Vector2f playerSize(64, 64);
+	//Collision(playerPosition, playerSize);
 }
-
-
+	//void Player::Collision(sf::Vector2f playerPosition, sf::Vector2f Size) {
+		//std::cout << "Player Position - X: " << playerPosition.x << ", Y:" << playerPosition.y << std::endl; // getting the player position and size to get the collision bounds
+		//std::cout << "Player Size - X: " << Size.x << ", Y:" << Size.y << std::endl;
+	//}
 
 void Player::playerKeyboardMovement(sf::View &view, sf::RenderWindow &window) {
 	sf::Vector2i CharAnim(1, Down); // this is a vector with 2 values, the x being the number multiplied by the image width, and the second is the direction
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		if (characterSprite.getPosition().y > 64)
 		{
 			CharAnim.y = Up;
+	
 			movePlayer('u', moveSpeed * clock.getElapsedTime().asSeconds());
 			lastPosition = Up;
 		}
@@ -34,6 +38,7 @@ void Player::playerKeyboardMovement(sf::View &view, sf::RenderWindow &window) {
 		if (characterSprite.getPosition().y < 4352)
 		{
 			CharAnim.y = Down;
+			
 			movePlayer('d', moveSpeed * clock.getElapsedTime().asSeconds());
 			lastPosition = Down;
 		}
@@ -44,16 +49,17 @@ void Player::playerKeyboardMovement(sf::View &view, sf::RenderWindow &window) {
 		if (characterSprite.getPosition().x > 64)
 		{
 			CharAnim.y = Left;
+			
 			movePlayer('l', moveSpeed * clock.getElapsedTime().asSeconds());
 			lastPosition = Left;
-
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		if (characterSprite.getPosition().x < 2752)
+		if (characterSprite.getPosition().x < 4032)
 		{
 			CharAnim.y = Right;
+			
 			movePlayer('r', moveSpeed * clock.getElapsedTime().asSeconds());
 			lastPosition = Right;
 		}
@@ -64,12 +70,15 @@ void Player::playerKeyboardMovement(sf::View &view, sf::RenderWindow &window) {
 		if (characterSprite.getPosition().y > 0)
 		{
 			CharAnim.y = Attack;
+		
 			movePlayer('a', moveSpeed * clock.getElapsedTime().asSeconds());
-			lastPosition = Attack;
-
+			lastPosition = Attack;	
 		}
 	}
 
+
+	
+		CharAnim.x ++; // incrementing the character direction x, to flick through sprite images	
 	
 	if (CharAnim.x * 64 >= spriteTexture.getSize().x)
 	{// if the texture width is greater than 
@@ -83,44 +92,7 @@ void Player::playerKeyboardMovement(sf::View &view, sf::RenderWindow &window) {
 		sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
 	{
 		CharAnim = sf::Vector2i(1, lastPosition);
-
 	}
-
-	
-	Prisoner prisoner;
-	Guard guard;
-
-
-		CharAnim.x++; // incrementing the character direction x, to flick through sprite images	
-	
-	
-
-
-	if (Collision::PixelPerfectTest(characterSprite, prisoner.prisonerSprite)) {
-		std::cout << "Collision" << std::endl;
-	
-		if (CharAnim.y == CharMove::Attack) {
-			prisoner.prisonerHealth -= (1 + hud.playerStrength);
-			std::cout << "attack: Damage = " + (1 + hud.playerStrength) << std::endl;
-			//prisonerAngry;
-
-
-		}
-	}
-	if (Collision::PixelPerfectTest(guard.guardSprite, characterSprite)) {
-		std::cout << "Collision" << std::endl;
-		if (CharAnim.y == CharMove::Attack) {
-			guard.guardHealth -= (1 + hud.playerStrength);
-
-			std::cout << "attack: Damage = " + (1 + hud.playerStrength) << std::endl;
-
-
-		}
-	}
-
-
-	
-
 
 	clock.restart();
 
@@ -130,20 +102,19 @@ void Player::playerKeyboardMovement(sf::View &view, sf::RenderWindow &window) {
 }
 
 void Player::PlayerMouseInput(sf::RenderWindow &window) {
-
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) { // left mouse button
 		sf::Vector2i mousePos = ::sf::Mouse::getPosition(window); // getting the position of the mouse relative to the window
 
-		if (mousePos.y >= hud.box.getPosition().y && mousePos.y <= hud.box.getPosition().y + 50) { // if the y position is between the HUD button
-			if (mousePos.x >= hud.box.getPosition().x && mousePos.x <= hud.box.getPosition().x + 50) { // if the x position is on the first HUD button
+		if (mousePos.y >= hud.box.getPosition().y && mousePos.y <= hud.box.getPosition().y + 60) { // if the y position is between the HUD button
+			if (mousePos.x >= hud.box.getPosition().x && mousePos.x <= hud.box.getPosition().x + 60) { // if the x position is on the first HUD button
 				std::cout << "button Clicked" << std::endl;
 			}
 
-			if (mousePos.x >= hud.box1.getPosition().x && mousePos.x <= hud.box1.getPosition().x + 50) { // if the x position is on the first HUD button
+			if (mousePos.x >= hud.box1.getPosition().x && mousePos.x <= hud.box1.getPosition().x + 60) { // if the x position is on the first HUD button
 				std::cout << "button 1 Clicked" << std::endl;
 			}
 
-			if (mousePos.x >= hud.box2.getPosition().x && mousePos.x <= hud.box2.getPosition().x + 50) { // if the x position is on the first HUD button
+			if (mousePos.x >= hud.box2.getPosition().x && mousePos.x <= hud.box2.getPosition().x + 60) { // if the x position is on the first HUD button
 				std::cout << "button 2 Clicked" << std::endl;
 			}
 		}
@@ -151,23 +122,23 @@ void Player::PlayerMouseInput(sf::RenderWindow &window) {
 
 }
 
+
 void Player::movePlayer(char direction, float moveSpeed) {
+		if (direction == 'u') {
+			characterSprite.move(0, -moveSpeed);
+		}
+		else if (direction == 'd') {
+			characterSprite.move(0, moveSpeed);
+		}
+		if (direction == 'l') {
+			characterSprite.move(-moveSpeed, 0);
+		}
+		else if (direction == 'r') {
+			characterSprite.move(moveSpeed, 0);
+		}
+		else if (direction == 'a') {
+			characterSprite.move(0, 0);
+		}
+	}
 
 
-	if (direction == 'u') {
-		characterSprite.move(0, -moveSpeed);
-	}
-	else if (direction == 'd') {
-		characterSprite.move(0, moveSpeed);
-	}
-	if (direction == 'l') {
-		characterSprite.move(-moveSpeed, 0);
-	}
-	else if (direction == 'r') {
-		characterSprite.move(moveSpeed, 0);
-	}
-	else if (direction == 'a') {
-		characterSprite.move(0, 0);
-	}
-
-}

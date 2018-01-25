@@ -14,10 +14,14 @@ public:
 
 	GuardDir lastGuardPosition = Down;
 
-
-	sf::Sprite guardSprite;
 	sf::Texture guardTexture;
+	sf::Sprite guardSprite;
 
+
+
+	//void Collision(sf::Vector2f guardPosition, sf::Vector2f Size);
+
+	sf::Vector2f guardPosition;
 	sf::Clock GuardClock;
 	int guardTime = 0;
 	int guardMove = 0; // the random number generated to see which state the prisoner is in

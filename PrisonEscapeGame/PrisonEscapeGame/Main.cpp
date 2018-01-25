@@ -11,39 +11,25 @@
 #include "Furniture.h"
 #include "Prisoner.h"
 #include "Guard.h"
-#include "Collision.hpp"
-#include "Box2D\Box2D.h"
-#include "b2GLDraw.h"
 #include "SkillItems.h"
-enum GameState { StartMenu, SkillsMenu, Options, Game };
+#include "OptionsMenu.h"
+#include "Instructions.h"
+#include "prisonWalls.h"
+enum GameState { StartMenu, SkillsMenu, Options, Game, InstructionsMenu };
 
 
 int GameState = StartMenu;
+
+float musicVolume;
+
 
 sf::Vector2i ScreenSize(800, 600);
 sf::Vector2f pos(ScreenSize.x / 2, ScreenSize.y / 2); // halving the screen size to set the centre of screen as the movement position
 
 int main()
 {
-	b2Vec2 noGrav(0.0f, 0.0f);
-	b2World world(noGrav);
 
-	float32 timeStep = 1 / 60.0f;      //time passed as (seconds)
-	int32 velocityIterations = 8.f;   //correct velocity
-	int32 positionIterations = 3.f;   // correct position
-
-	b2GLDraw debugInstance;
-	world.SetDebugDraw(&debugInstance);
-	uint32 flags = 0;
-	flags += b2Draw::e_aabbBit;
-	flags += b2Draw::e_centerOfMassBit;
-	flags += b2Draw::e_jointBit;
-	flags += b2Draw::e_pairBit;
-	flags += b2Draw::e_shapeBit;
-
-	debugInstance.SetFlags(flags);
-
-
+	sf::Vector2f playerStartPos(100.0f, 100.f);
 
 	sf::Vector2i ScreenSize(800, 600);
 	
@@ -52,42 +38,45 @@ int main()
 
 
 	Menu menu(window.getSize().x, window.getSize().y); // creating the start menu
+	OptionsMenu options(window.getSize().x, window.getSize().y); // crating the options menu 
+	Instructions instructions(window.getSize().x, window.getSize().y); 
+
 	SkillMenu skillmenu(window.getSize().x, window.getSize().y); // creating the Skill menu
 	mapLoader map;
 	Background background("../assets/image_assets/Background.png");
 	Background background2("../assets/image_assets/Background2.png");
 	Background SkillsBackground("../assets/image_assets/SkillsMenuBackground.png");
+	Background OptionsBackground("../assets/image_assets/OptionsBackground.png");
+	Background InstructionsBackground("../assets/image_assets/InstructionsBackground.png");
 	HUD hud;
 
 	Furniture furniture;
 	SkillItems skillitems;
-
 	Player player;
 	Prisoner prisoner;
 	Guard guard;
+	prisonWalls walls;
 
 	
 
 	sf::SoundBuffer soundBuffer; // sound buffer
 	sf::Music menuMusic; // backgroundMusic
+	
 
-	menuMusic.setVolume(50.0f);
+
 	if (!menuMusic.openFromFile("../assets/music_assets/BlueHighway.ogg")) { // SFML sucks and doesnt support MP3
 		std::cout << "Background music not loaded" << std::endl;
 		return -1;
 	}
-	//menuMusic.play(); // play the menu music
+//	menuMusic.play(); // play the menu music
 	menuMusic.getLoop();
 	sf::View view; //setting the view for the scrolling screen
 	view.reset(sf::FloatRect(0, 0, ScreenSize.x, ScreenSize.y));
 	view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f)); // from the left point(start point to width scale), top(start to screen height scale), screen width scale, screen height scale
 
-	
-	
-	
 
 
-	view.zoom(1.f); // zooming out - FOR DEBUG
+	view.zoom(1.0f); // zooming out - FOR DEBUG
 	
 	while (window.isOpen())
 	{
@@ -100,11 +89,9 @@ int main()
 				if (GameState == StartMenu)
 				{
 					if (sf::Keyboard::Key::Up == event.key.code) {
-
 						menu.Up();
 					}
 					if (sf::Keyboard::Key::Down == event.key.code) {
-
 						menu.Down();
 					}
 
@@ -115,7 +102,7 @@ int main()
 							GameState = SkillsMenu;
 							break;
 						case 1: std::cout << "options pressed" << std::endl;
-							//GameState = OptionsMenu;
+							GameState = Options;
 							break;
 						case 2: std::cout << "exit pressed" << std::endl;
 							//GameState = Exit;
@@ -236,9 +223,99 @@ int main()
 
 				}
 			
-				break;
+				if (GameState == Options) {
+					musicVolume = options.Music;
+					menuMusic.setVolume(musicVolume);
+					if (sf::Keyboard::Key::Up == event.key.code) {
+						options.Up();
+					}
+					if (sf::Keyboard::Key::Down == event.key.code) {
+						options.Down();
+					}
+
+					if (sf::Keyboard::Key::Left == event.key.code) {
+						switch (options.GetPressedItem()) {
+
+						case 0: std::cout << "Sound pressed" << std::endl;
+							if (options.Sound != 0) {
+								options.Sound--;
+							}
+							break;
+						case 1: std::cout << "Music pressed" << std::endl;
+							if (options.Music != 0) {
+								
+								options.Music--;
+							}
+							break;
+						}
+					}
+
+						if (sf::Keyboard::Key::Right == event.key.code) {
+							switch (options.GetPressedItem()) {
+
+							case 0: std::cout << "Sound pressed" << std::endl;
+								if (options.Sound <= 99) {
+									options.Sound++;
+
+								
+								}
+								break;
+							case 1: std::cout << "Music pressed" << std::endl;
+								if (options.Music <= 99) {
+									options.Music++;
+									
+								}
+								break;
+							}
+						}
+							if (sf::Keyboard::Key::Return == event.key.code) {
+								switch (options.GetPressedItem()) {
+								case 2: std::cout << "Instructions" << std::endl;
+									GameState = InstructionsMenu;
+									break;
+								case 3: std::cout << "Back" << std::endl;
+									GameState = StartMenu;
+									options.Up();
+									break;
+								
+								}
+							}
+						}
+				if (GameState == InstructionsMenu) {
+					if (sf::Keyboard::Key::Up == event.key.code) {
+						instructions.Up();
+					}
+					if (sf::Keyboard::Key::Down == event.key.code) {
+						instructions.Down();
+					}
+					if (sf::Keyboard::Key::Return == event.key.code) {
+						switch (instructions.GetPressedItem()) {
+						case 0: std::cout << "Keys" << std::endl;
+							
+							break;
+						case 1: std::cout << "Crafting" << std::endl;
+						
+						
+							break;
+						case 2: std::cout << "Skills" << std::endl;
+						
+							break;
+						case 3: std::cout << "Routine" << std::endl;
+						
+							break;
+						case 4: std::cout << "Back" << std::endl;
+							GameState = Options;
+							instructions.Up();
+							break;
+						case 5: std::cout << "Next" << std::endl;
+
+							break;
+						}
+					}
 				}
-			
+						
+					}
+				
 				
 			
 			if (event.type == sf::Event::Closed)
@@ -247,26 +324,7 @@ int main()
 		
 		//std::cout << clock.getElapsedTime().asMicroseconds() << std::endl;
 		
-		if (Collision::PixelPerfectTest(player.characterSprite, prisoner.prisonerSprite)) {
-			std::cout << "Collision" << std::endl;
-			
-			//	prisoner.prisonerHealth -= (1 + hud.playerStrength);
-				std::cout << "attack: Damage = " + (1 + hud.playerStrength) << std::endl;
-				//prisonerAngry;
-		}
-
-
-		if (Collision::PixelPerfectTest(guard.guardSprite, player.characterSprite)) {
-			std::cout << "Collision" << std::endl;
-			
-			//	guard.guardHealth -= (1 + hud.playerStrength);
-				std::cout << "attack: Damage = " + (1 + hud.playerStrength) << std::endl;
-			}
-		
-
-		if (Collision::PixelPerfectTest(guard.guardSprite, prisoner.prisonerSprite)) {
-			std::cout << "Collision" << std::endl;
-		}
+	
 
 		if (player.characterSprite.getPosition().x + 16 > ScreenSize.x / 2 + 16) {  // if the the player sprite with added amount gets beyond half the screen size, stop moving the player
 			pos.x = player.characterSprite.getPosition().x + 16;
@@ -282,8 +340,15 @@ int main()
 		}
 
 		window.clear(sf::Color(0, 240, 255));
-		world.Step(timeStep, velocityIterations, positionIterations); /*!<  steps the world physics - like a game loop for the box2d world */
-		
+		if (GameState == InstructionsMenu) {
+			InstructionsBackground.drawBackground(window);
+			instructions.draw(window);
+		}
+		if (GameState == Options) {
+			OptionsBackground.drawBackground(window);
+			options.draw(window);
+			options.drawBars(window);
+		}
 		if (GameState == SkillsMenu) {
 			SkillsBackground.drawBackground(window);
 			skillmenu.drawBars(window);
@@ -300,12 +365,25 @@ int main()
 		//drawing 
 		if (GameState == Game)
 		{
-			
-
+			//std::cout << "Player Movement: X = " << player.CharPosition.x << "; Y = " << player.CharPosition.y << std::endl;
+			//std::cout << "Player Position - X: " << player.posX << ", Y:" << player.posY << std::endl;
+			//std::cout << "Guard Position - X: " << guard.posX << ", Y:" << guard.posY << std::endl;
+			//std::cout << "Prisoner Position - X: " << prisoner.posX << ", Y:" << prisoner.posY << std::endl;
 
 			menuMusic.pause(); // pause that funky music
 		//	background.drawBackground(window);
 			map.drawMap(window);
+
+			//drawing the walls
+			walls.outerWalls(window);
+			walls.cellblockInnerWalls(window);
+			walls.medicalInnerWalls(window);
+			walls.wardenVisitationInnerWalls(window);
+			walls.closetAndCafInnerWalls(window);
+			walls.yardInnerWalls(window);
+			walls.workLaundSecInnerWalls(window);
+			walls.solitaryLibraryInnerWalls(window);
+
 			furniture.Doors(window);
 			furniture.smallFurniture(window);
 			furniture.mediumFurniture(window);
@@ -315,7 +393,7 @@ int main()
 			skillitems.WeightsBench(window);
 			skillitems.ExercBike(window);
 
-			player.drawPlayer(world, view, window);
+			player.drawPlayer(view, window);
 			
 			
 			
@@ -329,9 +407,6 @@ int main()
 			hud.HUDUserInput(view, window);
 			
 
-			world.DrawDebugData(); // drawing the debug data
-
-
 			if (hud.SkilOpen == true) {
 				hud.drawSkills(view, window);
 			}
@@ -340,9 +415,12 @@ int main()
 			}
 			if (hud.InvOpen == true) {
 				hud.drawInventory(view, window);
+			} if (hud.RepOpen == true) {
+				hud.drawReputation(view, window);
 			}
-
-		
+			if (hud.craftOpen == true) {
+				hud.drawCraft(view, window);
+			}
 
 		}
 
