@@ -90,7 +90,7 @@ public:
 	void drawHUD(sf::View &view, sf::RenderWindow &window);
 	void HUDUserInput(sf::View &view, sf::RenderWindow &window);
 	void Times(sf::View &view, sf::RenderWindow &window);
-
+	void MouseInput(sf::RenderWindow &window);
 	
 
 	

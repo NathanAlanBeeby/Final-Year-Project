@@ -427,8 +427,8 @@ void prisonWalls::solitaryLibraryInnerWalls(sf::RenderWindow &window) {
 			window.draw(inWalls[j]);
 		}
 		//walls between 2 doors above library
-		for (int j = 0; j < 15; j++) {
-			inWalls[j].setPosition((27 * 64) + (j * 64), (58 * 64));
+		for (int j = 0; j < 14; j++) {
+			inWalls[j].setPosition((28 * 64) + (j * 64), (58 * 64));
 			window.draw(inWalls[j]);
 		}
 		// 1 block to right of library door

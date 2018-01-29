@@ -22,7 +22,9 @@
 	//}
 
 void Player::playerKeyboardMovement(sf::View &view, sf::RenderWindow &window) {
+
 	sf::Vector2i CharAnim(1, Down); // this is a vector with 2 values, the x being the number multiplied by the image width, and the second is the direction
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		if (characterSprite.getPosition().y > 64)
@@ -96,29 +98,8 @@ void Player::playerKeyboardMovement(sf::View &view, sf::RenderWindow &window) {
 
 	clock.restart();
 
-	characterSprite.setTextureRect(sf::IntRect(CharAnim.x * 64, CharAnim.y * 64, 64, 64)); // drawing the rectangles position, width and height
+	characterSprite.setTextureRect(sf::IntRect(CharAnim.x * 32, CharAnim.y * 32, 32, 32)); // drawing the rectangles position, width and height
 	window.draw(characterSprite);
-
-}
-
-void Player::PlayerMouseInput(sf::RenderWindow &window) {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) { // left mouse button
-		sf::Vector2i mousePos = ::sf::Mouse::getPosition(window); // getting the position of the mouse relative to the window
-
-		if (mousePos.y >= hud.box.getPosition().y && mousePos.y <= hud.box.getPosition().y + 60) { // if the y position is between the HUD button
-			if (mousePos.x >= hud.box.getPosition().x && mousePos.x <= hud.box.getPosition().x + 60) { // if the x position is on the first HUD button
-				std::cout << "button Clicked" << std::endl;
-			}
-
-			if (mousePos.x >= hud.box1.getPosition().x && mousePos.x <= hud.box1.getPosition().x + 60) { // if the x position is on the first HUD button
-				std::cout << "button 1 Clicked" << std::endl;
-			}
-
-			if (mousePos.x >= hud.box2.getPosition().x && mousePos.x <= hud.box2.getPosition().x + 60) { // if the x position is on the first HUD button
-				std::cout << "button 2 Clicked" << std::endl;
-			}
-		}
-	}
 
 }
 

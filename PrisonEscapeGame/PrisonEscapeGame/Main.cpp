@@ -15,6 +15,9 @@
 #include "OptionsMenu.h"
 #include "Instructions.h"
 #include "prisonWalls.h"
+#include "Dialogue.h"
+#include "furnitureInv.h"
+
 enum GameState { StartMenu, SkillsMenu, Options, Game, InstructionsMenu };
 
 
@@ -56,8 +59,8 @@ int main()
 	Prisoner prisoner;
 	Guard guard;
 	prisonWalls walls;
-
-	
+	Dialogue dialogue;
+	furnitureInv furninv;
 
 	sf::SoundBuffer soundBuffer; // sound buffer
 	sf::Music menuMusic; // backgroundMusic
@@ -395,8 +398,13 @@ int main()
 
 			player.drawPlayer(view, window);
 			
-			
-			
+		//	furninv.drawFootLocker(view, window);
+
+			//TEST FOR DIALOGUE
+			if (dialogue.dialogueOpen == true) {
+				dialogue.drawDialogue(view, window);
+			}
+			//END TEST FOR DIALOGUE
 
 			prisoner.drawPrisoner(window);
 
@@ -405,7 +413,7 @@ int main()
 			
 			hud.drawHUD(view, window);
 			hud.HUDUserInput(view, window);
-			
+			hud.MouseInput(window);
 
 			if (hud.SkilOpen == true) {
 				hud.drawSkills(view, window);

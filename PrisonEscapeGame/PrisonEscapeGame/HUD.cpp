@@ -153,6 +153,70 @@
 
 
 }
+
+void HUD::MouseInput(sf::RenderWindow &window) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) { // left mouse button
+		sf::Vector2i mousePos = ::sf::Mouse::getPosition(window); // getting the position of the mouse relative to the window
+
+		if (mousePos.y >= box.getPosition().y && mousePos.y <= box.getPosition().y + 50) { // if the y position is between the HUD button
+
+			if (mousePos.x >= box.getPosition().x && mousePos.x <= box.getPosition().x + 50) { // if the x position is on the first HUD button
+				if (SkilOpen == false && InvOpen == false) {
+					MisOpenCount++; // incrementing to know if the player has hit the key a second time	
+
+					if ((MisOpen = true) && MisOpenCount >= 2) { // if the misOpenCount is 2, return the value back to 0, and turn the missions open screen to false, to stop drawing
+						std::cout << "Missions Closed" << std::endl;
+						MisOpenCount = 0;
+						MisOpen = false; // shutting the Missions screen down
+					}
+					else {
+						std::cout << "Missions Open" << std::endl;
+						MisOpen = true; // opening missions screen, drawing it to screen
+					}
+				}
+
+				//drawMissions(view, window);
+			}
+
+			if (mousePos.x >= box1.getPosition().x && mousePos.x <= box1.getPosition().x + 50) { // if the x position is on the first HUD button
+				if (MisOpen == false && InvOpen == false) {
+					SkilOpenCount++; // incrementing to know if the player has hit the key a second time	
+
+					if ((SkilOpen = true) && SkilOpenCount >= 2) { // if the misOpenCount is 2, return the value back to 0, and turn the missions open screen to false, to stop drawing
+						std::cout << "skills Closed" << std::endl;
+						SkilOpenCount = 0;
+						SkilOpen = false; // shutting the Missions screen down
+					}
+					else {
+						std::cout << "skills Open" << std::endl;
+						SkilOpen = true; // opening missions screen, drawing it to screen
+					}
+				}
+				//drawSkills(view, window);
+			}
+
+			if (mousePos.x >= box2.getPosition().x && mousePos.x <= box2.getPosition().x + 50) { // if the x position is on the first HUD button
+				if (SkilOpen == false && MisOpen == false) {
+					InvOpenCount++; // incrementing to know if the player has hit the key a second time	
+
+					if ((InvOpen = true) && InvOpenCount >= 2) { // if the misOpenCount is 2, return the value back to 0, and turn the missions open screen to false, to stop drawing
+						std::cout << "Inventory Closed" << std::endl;
+						InvOpenCount = 0;
+						InvOpen = false; // shutting the Missions screen down
+					}
+					else {
+						std::cout << "Inventory Open" << std::endl;
+						InvOpen = true; // opening missions screen, drawing it to screen
+					}
+				}
+				//drawInventory(view, window);
+			}
+
+
+		}
+	}
+}
+
 	void HUD::drawInventory(sf::View &view, sf::RenderWindow &window) {
 		if (!characterTexture.loadFromFile("../assets/image_assets/sprite_image.png")) {
 			std::cout << "Load fail Error on playerFaceTexture" << std::endl;
@@ -348,67 +412,10 @@
 		}*/
 
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) { // left mouse button
-		sf::Vector2i mousePos = ::sf::Mouse::getPosition(window); // getting the position of the mouse relative to the window
-
-
-		if (mousePos.y >= box.getPosition().y && mousePos.y <= box.getPosition().y + 50) { // if the y position is between the HUD button
-
-			if (mousePos.x >= box.getPosition().x && mousePos.x <= box.getPosition().x + 50) { // if the x position is on the first HUD button
-				if (SkilOpen == false && InvOpen == false) {
-					MisOpenCount++; // incrementing to know if the player has hit the key a second time	
-
-					if ((MisOpen = true) && MisOpenCount >= 2) { // if the misOpenCount is 2, return the value back to 0, and turn the missions open screen to false, to stop drawing
-						std::cout << "Missions Closed" << std::endl;
-						MisOpenCount = 0;
-						MisOpen = false; // shutting the Missions screen down
-					}
-					else {
-						std::cout << "Missions Open" << std::endl;
-						MisOpen = true; // opening missions screen, drawing it to screen
-					}
-				}
-
-				//drawMissions(view, window);
-			}
-
-			if (mousePos.x >= box1.getPosition().x && mousePos.x <= box1.getPosition().x + 50) { // if the x position is on the first HUD button
-				if (MisOpen == false && InvOpen == false) {
-					SkilOpenCount++; // incrementing to know if the player has hit the key a second time	
-
-					if ((SkilOpen = true) && SkilOpenCount >= 2) { // if the misOpenCount is 2, return the value back to 0, and turn the missions open screen to false, to stop drawing
-						std::cout << "skills Closed" << std::endl;
-						SkilOpenCount = 0;
-						SkilOpen = false; // shutting the Missions screen down
-					}
-					else {
-						std::cout << "skills Open" << std::endl;
-						SkilOpen = true; // opening missions screen, drawing it to screen
-					}
-				}
-				//drawSkills(view, window);
-			}
-
-			if (mousePos.x >= box2.getPosition().x && mousePos.x <= box2.getPosition().x + 50) { // if the x position is on the first HUD button
-				if (SkilOpen == false && MisOpen == false) {
-					InvOpenCount++; // incrementing to know if the player has hit the key a second time	
-
-					if ((InvOpen = true) && InvOpenCount >= 2) { // if the misOpenCount is 2, return the value back to 0, and turn the missions open screen to false, to stop drawing
-						std::cout << "Inventory Closed" << std::endl;
-						InvOpenCount = 0;
-						InvOpen = false; // shutting the Missions screen down
-					}
-					else {
-						std::cout << "Inventory Open" << std::endl;
-						InvOpen = true; // opening missions screen, drawing it to screen
-					}
-				}
-				//drawInventory(view, window);
-			}
-		}
+	
 	}
 
-}
+
 void HUD::drawReputation(sf::View &view, sf::RenderWindow &window) {
 	emptyGRep.setSize(sf::Vector2f(200, 20));
 	emptyGRep.setFillColor(sf::Color(0, 0, 255, HUDopacity));

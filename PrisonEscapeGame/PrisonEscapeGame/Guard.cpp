@@ -90,11 +90,11 @@ void Guard::drawGuard(sf::RenderWindow &window) {
 	}
 
 	GuardAnim.x++;
-	if (GuardAnim.x * 64 >= guardTexture.getSize().x) { // once the sprite reaches the end of the sprite sheet, reset to 0 again
+	if (GuardAnim.x * 32 >= guardTexture.getSize().x) { // once the sprite reaches the end of the sprite sheet, reset to 0 again
 		GuardAnim.x = 0;
 	}
 
-	guardSprite.setTextureRect(sf::IntRect(GuardAnim.x * 64, GuardAnim.y * 64, 64, 64)); // cropping the image with the position and size of the image 
+	guardSprite.setTextureRect(sf::IntRect(GuardAnim.x * 32, GuardAnim.y * 32, 32, 32)); // cropping the image with the position and size of the image 
 
 	if(guardHealth > 0){
 

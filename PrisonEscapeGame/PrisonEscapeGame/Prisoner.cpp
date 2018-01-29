@@ -89,11 +89,11 @@ void Prisoner::drawPrisoner(sf::RenderWindow &window) {
 	
 
 		PrisonAnim.x++;
-		if (PrisonAnim.x * 64 >= prisonerTexture.getSize().x) { // once the sprite reaches the end of the sprite sheet, reset to 0 again
+		if (PrisonAnim.x * 32 >= prisonerTexture.getSize().x) { // once the sprite reaches the end of the sprite sheet, reset to 0 again
 			PrisonAnim.x = 0;
 		}
 
-		prisonerSprite.setTextureRect(sf::IntRect(PrisonAnim.x * 64, PrisonAnim.y * 64, 64, 64)); // cropping the image with the position and size of the image 
+		prisonerSprite.setTextureRect(sf::IntRect(PrisonAnim.x * 32, PrisonAnim.y * 32, 32, 32)); // cropping the image with the position and size of the image 
 
 		if (prisonerHealth > 0) {
 			window.draw(prisonerSprite);

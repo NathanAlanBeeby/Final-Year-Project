@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "HUD.h"
-
+#include "Collision.h"
 
 
 enum prisonerState { IDLE, prisonerAngry, DESTINATION, CHASE }; // moving idly, walking to destination, and chasing the player
@@ -12,10 +12,19 @@ class Prisoner
 public:
 	Prisoner();
 	~Prisoner();
-	enum PrisonerDir { Up, Left, Down, Right, Idle };
+	enum PrisonerDir { Up, Right, Down, Left, Idle };
 
 	PrisonerDir lastPrisonerPosition = Down;
 	HUD hud;
+
+
+	//TESTING FOR COLLISION
+	sf::Vector2f GetPosition() { return body.getPosition(); }
+	Collision GetCollision() { return Collision(body); }
+	//TESTING FOR COLLISION
+
+
+
 
 	sf::Texture prisonerTexture;
 	sf::Sprite prisonerSprite;
@@ -33,6 +42,7 @@ public:
 	void drawPrisoner(sf::RenderWindow &window);
 	void prisonerState();
 	void movePrisoner(char direction, float moveSpeed);
-
+private:
+	sf::RectangleShape body;
 };
 

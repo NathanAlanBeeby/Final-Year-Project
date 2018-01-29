@@ -2,7 +2,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-
+#include "Collision.h"
 enum guardState { guardIDLE, guardDESTINATION, guardCHASE }; // moving idly, walking to destination, and chasing the player
 
 class Guard
@@ -13,6 +13,15 @@ public:
 	enum GuardDir { Up, Left, Down, Right, Idle };
 
 	GuardDir lastGuardPosition = Down;
+
+
+
+	//TESTING FOR COLLISION
+	sf::Vector2f GetPosition() { return body.getPosition(); }
+	Collision GetCollision() { return Collision(body); }
+	//TESTING FOR COLLISION
+
+
 
 	sf::Texture guardTexture;
 	sf::Sprite guardSprite;
@@ -31,5 +40,7 @@ public:
 	void drawGuard(sf::RenderWindow &window);
 	void guardState();
 	void moveGuard(char direction, float moveSpeed);
+private:
+	sf::RectangleShape body;
 };
 

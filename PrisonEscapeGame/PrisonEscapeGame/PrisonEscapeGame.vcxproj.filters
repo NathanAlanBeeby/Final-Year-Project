@@ -69,6 +69,12 @@
     <ClCompile Include="Routine.cpp">
       <Filter>Source Files\HUDItems</Filter>
     </ClCompile>
+    <ClCompile Include="Dialogue.cpp">
+      <Filter>Source Files\HUDItems</Filter>
+    </ClCompile>
+    <ClCompile Include="furnitureInv.cpp">
+      <Filter>Source Files\HUDItems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mapLoader.h">
@@ -115,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="Background.h">
       <Filter>Source Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogue.h">
+      <Filter>Source Files\HUDItems</Filter>
+    </ClInclude>
+    <ClInclude Include="furnitureInv.h">
+      <Filter>Source Files\HUDItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

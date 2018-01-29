@@ -1,12 +1,4 @@
-﻿  Main.cpp
-f:\fyp\fyp prison game\prisonescapegame\prisonescapegame\maploader.h(72): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-f:\fyp\fyp prison game\prisonescapegame\prisonescapegame\main.cpp(27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-f:\fyp\fyp prison game\prisonescapegame\prisonescapegame\main.cpp(40): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-f:\fyp\fyp prison game\prisonescapegame\prisonescapegame\main.cpp(41): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-f:\fyp\fyp prison game\prisonescapegame\prisonescapegame\main.cpp(42): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-f:\fyp\fyp prison game\prisonescapegame\prisonescapegame\main.cpp(44): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-f:\fyp\fyp prison game\prisonescapegame\prisonescapegame\main.cpp(74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-f:\fyp\fyp prison game\prisonescapegame\prisonescapegame\main.cpp(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-f:\fyp\fyp prison game\prisonescapegame\prisonescapegame\main.cpp(339): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+﻿  Player.cpp
+f:\fyp\fyp prison game\prisonescapegame\prisonescapegame\player.cpp(85): warning C4018: '>=': signed/unsigned mismatch
   PrisonEscapeGame.vcxproj -> F:\FYP\FYP prison game\PrisonEscapeGame\Debug\PrisonEscapeGame.exe
   PrisonEscapeGame.vcxproj -> F:\FYP\FYP prison game\PrisonEscapeGame\Debug\PrisonEscapeGame.pdb (Full PDB)

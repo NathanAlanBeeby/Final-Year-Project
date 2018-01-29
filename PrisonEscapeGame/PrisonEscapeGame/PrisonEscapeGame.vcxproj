@@ -159,7 +159,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Dialogue.cpp" />
     <ClCompile Include="Furniture.cpp" />
+    <ClCompile Include="furnitureInv.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Instructions.cpp" />
@@ -176,7 +178,9 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Dialogue.h" />
     <ClInclude Include="Furniture.h" />
+    <ClInclude Include="furnitureInv.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Instructions.h" />
