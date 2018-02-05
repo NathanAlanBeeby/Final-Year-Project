@@ -12,25 +12,25 @@ Furniture::~Furniture()
 
 
 void Furniture::Doors(sf::RenderWindow &window) {
-	if (!cellTexture.loadFromFile("../assets/image_assets/cellDoor.png")) {
+	if (!cellTexture.loadFromFile("../assets/image_assets/Doors/cellDoor.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!averageDoorTexture.loadFromFile("../assets/image_assets/averageDoor.png")) {
+	if (!averageDoorTexture.loadFromFile("../assets/image_assets/Doors/averageDoor.png")) {
 		std::cout << "Load fail Error on averageDoorTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!solitaryTexture.loadFromFile("../assets/image_assets/solitaryDoor.png")) {
+	if (!solitaryTexture.loadFromFile("../assets/image_assets/Doors/solitaryDoor.png")) {
 		std::cout << "Load fail Error on solitaryTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!securityTexture.loadFromFile("../assets/image_assets/securityDoor.png")) {
+	if (!securityTexture.loadFromFile("../assets/image_assets/Doors/securityDoor.png")) {
 		std::cout << "Load fail Error on securityDoorTexture" << std::endl;
 		system("pause");
 
@@ -156,53 +156,53 @@ void Furniture::Doors(sf::RenderWindow &window) {
 }
 
 void Furniture::smallFurniture(sf::RenderWindow &window) {
-	if (!toiletTexture.loadFromFile("../assets/image_assets/SinkToilet.png")) {
+	if (!toiletTexture.loadFromFile("../assets/image_assets/Furniture/SinkToilet.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!chairTexture.loadFromFile("../assets/image_assets/Chair.png")) {
+	if (!chairTexture.loadFromFile("../assets/image_assets/Furniture/Chair.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!lockerTexture.loadFromFile("../assets/image_assets/locker.png")) {
+	if (!lockerTexture.loadFromFile("../assets/image_assets/Furniture/locker.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!showerTexture.loadFromFile("../assets/image_assets/Shower.png")) {
+	if (!showerTexture.loadFromFile("../assets/image_assets/Furniture/Shower.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
-	if (!PhoneTexture.loadFromFile("../assets/image_assets/PayPhone.png")) {
-		std::cout << "Load fail Error on cellTexture" << std::endl;
-		system("pause");
-
-	}
-
-	if (!DrainTexture.loadFromFile("../assets/image_assets/ManHole.png")) {
+	if (!PhoneTexture.loadFromFile("../assets/image_assets/Furniture/PayPhone.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!TrashTexture.loadFromFile("../assets/image_assets/TrashBin.png")) {
+	if (!DrainTexture.loadFromFile("../assets/image_assets/Furniture/ManHole.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!WashingTexture.loadFromFile("../assets/image_assets/Washer.png")) {
+	if (!TrashTexture.loadFromFile("../assets/image_assets/Furniture/TrashBin.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
-	if (!LBasketTexture.loadFromFile("../assets/image_assets/WashingBasket.png")) {
+
+	if (!WashingTexture.loadFromFile("../assets/image_assets/Furniture/Washer.png")) {
+		std::cout << "Load fail Error on cellTexture" << std::endl;
+		system("pause");
+
+	}
+	if (!LBasketTexture.loadFromFile("../assets/image_assets/Furniture/WashingBasket.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
@@ -408,55 +408,55 @@ void Furniture::smallFurniture(sf::RenderWindow &window) {
 }
 
 void Furniture::mediumFurniture(sf::RenderWindow &window) {
-	if (!DeskTexture.loadFromFile("../assets/image_assets/OfficeDesk.png")) {
+	if (!DeskTexture.loadFromFile("../assets/image_assets/Furniture/OfficeDesk.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!TVTexture.loadFromFile("../assets/image_assets/TV.png")) {
+	if (!TVTexture.loadFromFile("../assets/image_assets/Furniture/TV.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!SofaTexture.loadFromFile("../assets/image_assets/Sofa.png")) {
+	if (!SofaTexture.loadFromFile("../assets/image_assets/Furniture/Sofa.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!FtLockerTexture.loadFromFile("../assets/image_assets/Footlocker.png")) {
+	if (!FtLockerTexture.loadFromFile("../assets/image_assets/Furniture/Footlocker.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!bedTexture.loadFromFile("../assets/image_assets/prisonBed.png")) {
+	if (!bedTexture.loadFromFile("../assets/image_assets/Furniture/prisonBed.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!medbedTexture.loadFromFile("../assets/image_assets/MedicalBed.png")) {
+	if (!medbedTexture.loadFromFile("../assets/image_assets/Furniture/MedicalBed.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!MopTexture.loadFromFile("../assets/image_assets/MopAndBucket.png")) {
+	if (!MopTexture.loadFromFile("../assets/image_assets/Furniture/MopAndBucket.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!BookTexture.loadFromFile("../assets/image_assets/Bookshelf.png")) {
+	if (!BookTexture.loadFromFile("../assets/image_assets/Furniture/Bookshelf.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!MicrowaveTexture.loadFromFile("../assets/image_assets/MicrowaveAndKettle.png")) {
+	if (!MicrowaveTexture.loadFromFile("../assets/image_assets/Furniture/MicrowaveAndKettle.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
@@ -667,31 +667,31 @@ void Furniture::largeFurniture(sf::RenderWindow &window) {
 	
 
 
-	if (!ServTexture.loadFromFile("../assets/image_assets/ServingTable.png")) {
+	if (!ServTexture.loadFromFile("../assets/image_assets/Furniture/ServingTable.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!TableTexture.loadFromFile("../assets/image_assets/CafeteriaTable.png")) {
+	if (!TableTexture.loadFromFile("../assets/image_assets/Furniture/CafeteriaTable.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!BenchTexture.loadFromFile("../assets/image_assets/CafeteriaBench.png")) {
+	if (!BenchTexture.loadFromFile("../assets/image_assets/Furniture/CafeteriaBench.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!VisitTexture.loadFromFile("../assets/image_assets/VisitorsTable.png")) {
+	if (!VisitTexture.loadFromFile("../assets/image_assets/Furniture/VisitorsTable.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
 
-	if (!WardenTexture.loadFromFile("../assets/image_assets/WardenDesk.png")) {
+	if (!WardenTexture.loadFromFile("../assets/image_assets/Furniture/WardenDesk.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
@@ -785,32 +785,32 @@ void Furniture::largeFurniture(sf::RenderWindow &window) {
 }
 
 void Furniture::WorkShop(sf::RenderWindow &window) {
-	if (!WorkBenchTexture.loadFromFile("../assets/image_assets/WorkBench.png")) {
+	if (!WorkBenchTexture.loadFromFile("../assets/image_assets/Furniture/WorkBench.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
-	if (!SanderTexture.loadFromFile("../assets/image_assets/Sander.png")) {
+	if (!SanderTexture.loadFromFile("../assets/image_assets/Furniture/Sander.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
-	if (!ToolsCabinetTexture.loadFromFile("../assets/image_assets/ToolsCabinet.png")) {
+	if (!ToolsCabinetTexture.loadFromFile("../assets/image_assets/Furniture/ToolsCabinet.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
-	if (!DumpsterTexture.loadFromFile("../assets/image_assets/Dumpster.png")) {
+	if (!DumpsterTexture.loadFromFile("../assets/image_assets/Furniture/Dumpster.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
-	if (!TimberTexture.loadFromFile("../assets/image_assets/TimberStorage.png")) {
+	if (!TimberTexture.loadFromFile("../assets/image_assets/Furniture/TimberStorage.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 
 	}
-	if (!JigSawTexture.loadFromFile("../assets/image_assets/JigSaw.png")) {
+	if (!JigSawTexture.loadFromFile("../assets/image_assets/Furniture/JigSaw.png")) {
 		std::cout << "Load fail Error on cellTexture" << std::endl;
 		system("pause");
 

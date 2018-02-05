@@ -25,15 +25,12 @@
     <Filter Include="Source Files\HUDItems">
       <UniqueIdentifier>{d1acff22-e897-4866-bee5-8d55e1b6ea16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{22175df1-7466-4659-8352-d30f6afafbf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SkillItems.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Menu.cpp">
@@ -69,21 +66,27 @@
     <ClCompile Include="Routine.cpp">
       <Filter>Source Files\HUDItems</Filter>
     </ClCompile>
-    <ClCompile Include="Dialogue.cpp">
-      <Filter>Source Files\HUDItems</Filter>
-    </ClCompile>
     <ClCompile Include="furnitureInv.cpp">
       <Filter>Source Files\HUDItems</Filter>
+    </ClCompile>
+    <ClCompile Include="prisonerDialogue.cpp">
+      <Filter>Source Files\HUDItems</Filter>
+    </ClCompile>
+    <ClCompile Include="guardDialogue.cpp">
+      <Filter>Source Files\HUDItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Warden.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillItems.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mapLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillItems.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Instructions.h">
@@ -122,11 +125,23 @@
     <ClInclude Include="Background.h">
       <Filter>Source Files\Menus</Filter>
     </ClInclude>
-    <ClInclude Include="Dialogue.h">
-      <Filter>Source Files\HUDItems</Filter>
-    </ClInclude>
     <ClInclude Include="furnitureInv.h">
       <Filter>Source Files\HUDItems</Filter>
+    </ClInclude>
+    <ClInclude Include="prisonerDialogue.h">
+      <Filter>Source Files\HUDItems</Filter>
+    </ClInclude>
+    <ClInclude Include="guardDialogue.h">
+      <Filter>Source Files\HUDItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Warden.h">
+      <Filter>Source Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillItems.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Source Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

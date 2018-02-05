@@ -6,50 +6,41 @@
 #include "Collision.h"
 class Player
 {
-
+	
 public:
-	enum CharMove { Down, Right, Up, Left, Attack };
-	CharMove lastPosition = Down;
+
 	sf::Texture spriteTexture;
-	sf::Sprite characterSprite;
+	sf::RectangleShape characterSprite;
 
-
-	//TESTING FOR COLLISION
-	sf::Vector2f GetPosition() { return body.getPosition(); }
-	Collision GetCollision() { return Collision(body); }
-	//TESTING FOR COLLISION
-
-
-
-
-	sf::Vector2f playerPosition;
 	//void Collision(sf::Vector2f playerPosition, sf::Vector2f Size);
 
 	HUD hud;
-	float moveSpeed = 100;
+	float moveSpeed = (15 + hud.playerStamina);
 	
 	
 	sf::Clock clock;
 	sf::Vector2i ScreenSize;
 
+	sf::Vector2f getPosition() { return characterSprite.getPosition(); }
+
+	Collision getCollision() { return Collision(characterSprite); }
+
 	int MisOpenCount = 0; // way of knowing if the player has hit the key twice
 	int InvOpenCount = 0; // way of knowing if the player has hit the key twice
 	int SkilOpenCount = 0; // way of knowing if the player has hit the key twice
 	
-	Player() {	
-		characterSprite.setPosition(120, 120);
-		
-
-	}
+	Player(sf::Vector2f size, sf::Vector2f position);
 
 
-	void drawPlayer(sf::View view, sf::RenderWindow &window);
 	void playerKeyboardMovement(sf::View &view, sf::RenderWindow &window);
-	
-	void movePlayer(char direction, float moveSpeed);
 
-private:
-	sf::RectangleShape body;
+
+	sf::Vector2f vel;
+
+	void onCollision(sf::Vector2f direction);
+	
+
+
 };
 
 //https://www.youtube.com/watch?v=TJtjH5qKBbs - 21:49 24/11/2017

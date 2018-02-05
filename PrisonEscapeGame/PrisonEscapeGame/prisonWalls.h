@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include <iostream>
+#include "Collision.h"
+
 class prisonWalls
 {
 public:
@@ -28,5 +30,11 @@ public:
 	void yardInnerWalls(sf::RenderWindow &window);
 	void workLaundSecInnerWalls(sf::RenderWindow &window);
 	void solitaryLibraryInnerWalls(sf::RenderWindow &window);
+
+
+	Collision getCollision() {
+		return Collision(wallBlock);
+	}
+
 };
 

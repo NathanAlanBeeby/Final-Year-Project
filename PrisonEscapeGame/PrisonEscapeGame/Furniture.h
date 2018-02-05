@@ -1,24 +1,24 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
-
+#include "Collision.h"
 class Furniture
 {
-
-
-	
 	// 1 x 1 Objects - Sink and toilet, office chair, locker, shower head
-
 	// 1 x 5 Objects - Caffeteria Bench, 
-
 	// 2 x 1 Objects - Office Desk, Cell Block TV, Sofa, Footlocker, prison bed
-
 	// 2 x 2 Objects - Medical Bed
-
 	// 2 x 5 Objects - Serving Table, Cafeteria Table
 public:
 	
-
+	Collision getCollision() {
+		return Collision(cellDoor);	return Collision(averageDoor);	return Collision(solitaryDoor);	return Collision(securityDoor);
+		return Collision(toiletSink);	return Collision(officeChair);	return Collision(locker);	return Collision(showerHead); return Collision(TrashCan);	return Collision(PayPhone);	return Collision(DrainPipe);	return Collision(WashingMachine);	return Collision(LaundryBasket);
+		return Collision(caffeteriaBench);	return Collision(officeDesk);	return Collision(cbTV);	return Collision(sofa); return Collision(footlocker);	return Collision(prisonBed);	return Collision(medicalBed);	return Collision(MopAndBucket);	return Collision(Bookshelf);	return Collision(MicrowaveKettle);
+		return Collision(CafBench);	return Collision(CafTable);	return Collision(ServTable);	return Collision(Visitation);	return Collision(WardDesk);
+		return Collision(WorkBench);	return Collision(Sander);	return Collision(ToolsCabinet);	return Collision(Dumpster);	return Collision(TimberStorage);	return Collision(JigSaw);
+	}
+	
 	sf::RectangleShape cellDoor, averageDoor, solitaryDoor, securityDoor; //1x1 - DOORS
 	sf::Texture cellTexture, averageDoorTexture, solitaryTexture, securityTexture;
 

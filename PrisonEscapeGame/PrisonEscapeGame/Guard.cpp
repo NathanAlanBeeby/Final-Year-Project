@@ -1,9 +1,16 @@
 #include "Guard.h"
 #include <iostream>
 
-Guard::Guard()
+Guard::Guard(sf::Vector2f size, sf::Vector2f position)
 {
-	guardSprite.setPosition(100, 200);
+	if (!guardTexture.loadFromFile("../assets/image_assets/characters/guard_images.png")) {
+		std::cout << "Error could not load guard texture" << std::endl;
+		system("pause");
+	}
+	guardSprite.setSize(size);
+	guardSprite.setOrigin(size / 2.0f);
+	guardSprite.setTexture(&guardTexture);
+	guardSprite.setPosition(position);
 
 }
 
@@ -13,26 +20,17 @@ Guard::~Guard()
 }
 
 
+enum GuardDir { Down, Right, Up, Left, Idle };
+GuardDir lastGuardPosition = Down;
+sf::Vector2i GuardAnim(1, Down);
+
 
 
 void Guard::drawGuard(sf::RenderWindow &window) {
-	sf::Vector2i GuardAnim(1, Down);
 
-	if (!guardTexture.loadFromFile("../assets/image_assets/guard_images.png")) {
-		std::cout << "Error could not load prisoner texture" << std::endl;
-		system("pause");
-	}
-
-
-	guardSprite.setTexture(guardTexture);
-
-	 guardPosition.x = guardSprite.getPosition().x;
-	 guardPosition.y = guardSprite.getPosition().y;
-
-
-	int guardState = guardIDLE; // setting the player defaultly to IDLE
-
-
+	guardState::guardIDLE; // setting the player defaultly to IDLE
+	vel.x = 0;
+	vel.y = 0;
 
 	std::string SecondsString = std::to_string(guardTime);
 	sf::Time TimeElapsed = GuardClock.getElapsedTime(); // setting the time to the hud clock, so it can count seconds
@@ -46,49 +44,47 @@ void Guard::drawGuard(sf::RenderWindow &window) {
 		std::cout << guardTime << std::endl;
 	}
 
+	if (guardState::guardIDLE) {
+		if (guardTime >= 2) {
+			guardMove = rand() % 6; // a random number generator between 1 and 8
+			guardTime = 0;
+		}
 
-	if (guardTime >= 2) {
-		guardMove = rand() % 6; // a random number generator between 1 and 8
-		guardTime = 0;
-	}
-
-	int Speed = 10;
-
-
-	if (guardMove == 1) { // Up Facing prisoner
-		if (guardSprite.getPosition().y < 4352) {
-			GuardAnim.y = Down;
-			moveGuard('u', Speed);
-			lastGuardPosition = Down;
+		if (guardMove == 1) {
+			if (guardSprite.getPosition().y < 4352) {
+				vel.y -= moveSpeed;
+				GuardAnim.y = Up;
+				lastGuardPosition = Up;
+			}
+		}
+		else if (guardMove == 2) {
+			if (guardSprite.getPosition().x > 64) {
+				vel.x -= moveSpeed;
+				GuardAnim.y = Left;
+				lastGuardPosition = Left;
+			}
+		}
+		else if (guardMove == 3) {
+			if (guardSprite.getPosition().y > 64) {
+				vel.y += moveSpeed;
+				GuardAnim.y = Down;
+				lastGuardPosition = Down;
+			}
+		}
+		else if (guardMove == 4) { // Right Facing Prisoner
+			if (guardSprite.getPosition().x < 2752) {
+				vel.x += moveSpeed;
+				GuardAnim.y = Right;
+				lastGuardPosition = Right;
+			}
+		}
+		else {
+			GuardAnim.y = Idle;
+			lastGuardPosition = Idle;
 		}
 	}
-	else if (guardMove == 2) { // Down Facing Prisoner
-		if (guardSprite.getPosition().x > 64) {
-			GuardAnim.y = Left;
-			moveGuard('l', Speed);
-			lastGuardPosition = Left;
-		}
-	}
-	else if (guardMove == 3) { // Left Facing Prisoner
-		if (guardSprite.getPosition().y > 64) {
-			GuardAnim.y = Up;
-			moveGuard('d', Speed);
-			lastGuardPosition = Up;
-		}
-	}
-	else if (guardMove == 4) { // Right Facing Prisoner
-		if (guardSprite.getPosition().x < 2752) {
-			GuardAnim.y = Right;
-			moveGuard('r', Speed);
-			lastGuardPosition = Right;
-		}
-	}
-	else {
-		GuardAnim.y = Idle;
-		moveGuard('a', Speed);
-		lastGuardPosition = Idle;
-	}
 
+	guardSprite.move(vel.x, vel.y);
 	GuardAnim.x++;
 	if (GuardAnim.x * 32 >= guardTexture.getSize().x) { // once the sprite reaches the end of the sprite sheet, reset to 0 again
 		GuardAnim.x = 0;
@@ -116,21 +112,24 @@ void Guard::drawGuard(sf::RenderWindow &window) {
 void Guard::guardState() {
 
 }
+void Guard::onCollision(sf::Vector2f direction)
+{
+	if (direction.x < 0.0f) {
+		//colliding on the left side so set velocity to 0 to stop movement
+		vel.x = 0.0f;
+	}
+	else if (direction.x > 0.0f) {
+		//colliding on the right
+		vel.x = 0.0f;
+	}
 
-void Guard::moveGuard(char direction, float moveSpeed) {
-	if (direction == 'u') {
-		guardSprite.move(0, -moveSpeed);
+	if (direction.y < 0.0f) {
+		//colliding on the bottom
+		vel.y = 0.0f;
+
 	}
-	else if (direction == 'd') {
-		guardSprite.move(0, moveSpeed);
-	}
-	if (direction == 'l') {
-		guardSprite.move(-moveSpeed, 0);
-	}
-	else if (direction == 'r') {
-		guardSprite.move(moveSpeed, 0);
-	}
-	else if (direction == 'a') {
-		guardSprite.move(0, 0);
+	else if (direction.y > 0.0f) {
+		//colliding on top
+		vel.y = 0.0f;
 	}
 }

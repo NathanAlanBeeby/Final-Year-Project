@@ -2,9 +2,17 @@
 #include <iostream>
 
 
-Prisoner::Prisoner()
+Prisoner::Prisoner(sf::Vector2f size, sf::Vector2f position)
 {
-	prisonerSprite.setPosition(100, 100);
+	if (!prisonerTexture.loadFromFile("../assets/image_assets/characters/prisoner_images.png")) {
+		std::cout << "Error could not load prisoner texture" << std::endl;
+		system("pause");
+	}
+
+	prisonerSprite.setSize(size);
+	prisonerSprite.setOrigin(size / 2.0f);
+	prisonerSprite.setTexture(&prisonerTexture);
+	prisonerSprite.setPosition(position);
 
 }
 
@@ -14,19 +22,19 @@ Prisoner::~Prisoner()
 }
 
 
+enum PrisonerDir { Down, Right, Up, Left, Idle };
+PrisonerDir lastPrisonerPosition = Down;
+sf::Vector2i PrisonAnim(1, Down);
+
 
 
 void Prisoner::drawPrisoner(sf::RenderWindow &window) {
-	sf::Vector2i PrisonAnim(1, Down);
+
+	prisonerState::IDLE;
+	vel.x = 0;
+	vel.y = 0;
+
 	
-	if (!prisonerTexture.loadFromFile("../assets/image_assets/prisoner_images.png")) {
-		std::cout << "Error could not load prisoner texture" << std::endl;
-		system("pause");
-}
-	prisonerSprite.setTexture(prisonerTexture);
-	
-	 prisonerPosition.x = prisonerSprite.getPosition().x;
-	 prisonerPosition.y = prisonerSprite.getPosition().y;
 
 	std::string SecondsString = std::to_string(prisonTime);
 	sf::Time TimeElapsed = PrisonClock.getElapsedTime(); // setting the time to the hud clock, so it can count seconds
@@ -42,51 +50,50 @@ void Prisoner::drawPrisoner(sf::RenderWindow &window) {
 		std::cout << prisonTime << std::endl;
 	}
 
+	if (prisonerState::IDLE) {
+		if (prisonTime >= 5) {
+			PrisonMove = rand() % 6; // a random number generator between 1 and 8
+			prisonTime = 0;
+		}
 
-	if (prisonTime >= 5) {
-		PrisonMove = rand() % 6; // a random number generator between 1 and 8
-		prisonTime = 0;
-	}
 
-	
 
-		if (PrisonMove == 1) { // Up Facing prisoner
+		if (PrisonMove == 1) {
 			if (prisonerSprite.getPosition().y > 64) {
+				vel.y -= moveSpeed;
 				PrisonAnim.y = Up;
-				movePrisoner('u', Speed);
 				lastPrisonerPosition = Up;
 			}
 		}
-		else if (PrisonMove == 2) { // Down Facing Prisoner
+		else if (PrisonMove == 2) {
 			if (prisonerSprite.getPosition().x > 64) {
+				vel.x -= moveSpeed;
 				PrisonAnim.y = Left;
-				movePrisoner('l', Speed);
 				lastPrisonerPosition = Left;
 			}
 		}
-		else if (PrisonMove == 3) { // Left Facing Prisoner
+		else if (PrisonMove == 3) {
 			if (prisonerSprite.getPosition().y < 4416) {
+				vel.y += moveSpeed;
 				PrisonAnim.y = Down;
-				movePrisoner('d', Speed);
 				lastPrisonerPosition = Down;
 			}
 		}
-		else if (PrisonMove == 4) { // Right Facing Prisoner
+		else if (PrisonMove == 4) {
 			if (prisonerSprite.getPosition().x < 2752) {
+				vel.x += moveSpeed;
 				PrisonAnim.y = Right;
-				movePrisoner('r', Speed);
 				lastPrisonerPosition = Right;
 			}
 		}
 		else {
 			PrisonAnim.y = Idle;
-			movePrisoner('i', Speed);
 			lastPrisonerPosition = Idle;
 		}
 
-
+	}
 	
-	
+		prisonerSprite.move(vel.x, vel.y);
 
 		PrisonAnim.x++;
 		if (PrisonAnim.x * 32 >= prisonerTexture.getSize().x) { // once the sprite reaches the end of the sprite sheet, reset to 0 again
@@ -112,21 +119,24 @@ void Prisoner::prisonerState() {
 	//std::cout << "Prisoner Position - X: " << prisonerPosition.x << ", Y:" << prisonerPosition.y << std::endl; // getting the prisoner position and size to get the collision bounds
 	//std::cout << "Prisoner Size - X: " << Size.x << ", Y:" << Size.y << std::endl;
 //}
+void Prisoner::onCollision(sf::Vector2f direction)
+{
+	if (direction.x < 0.0f) {
+		//colliding on the left side so set velocity to 0 to stop movement
+		vel.x = 0.0f;
+	}
+	else if (direction.x > 0.0f) {
+		//colliding on the right
+		vel.x = 0.0f;
+	}
 
-void Prisoner::movePrisoner(char direction, float moveSpeed) {
-	if (direction == 'u') {
-		prisonerSprite.move(0, -moveSpeed);
+	if (direction.y < 0.0f) {
+		//colliding on the bottom
+		vel.y = 0.0f;
+
 	}
-	else if (direction == 'd') {
-		prisonerSprite.move(0, moveSpeed);
-	}
-	if (direction == 'l') {
-		prisonerSprite.move(-moveSpeed, 0);
-	}
-	else if (direction == 'r') {
-		prisonerSprite.move(moveSpeed, 0);
-	}
-	else if (direction == 'i') {
-		prisonerSprite.move(0, 0);
+	else if (direction.y > 0.0f) {
+		//colliding on top
+		vel.y = 0.0f;
 	}
 }

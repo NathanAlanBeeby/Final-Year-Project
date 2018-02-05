@@ -159,7 +159,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="Dialogue.cpp" />
+    <ClCompile Include="guardDialogue.cpp" />
     <ClCompile Include="Furniture.cpp" />
     <ClCompile Include="furnitureInv.cpp" />
     <ClCompile Include="Guard.cpp" />
@@ -170,15 +170,17 @@
     <ClCompile Include="OptionsMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Prisoner.cpp" />
+    <ClCompile Include="prisonerDialogue.cpp" />
     <ClCompile Include="prisonWalls.cpp" />
     <ClCompile Include="Routine.cpp" />
     <ClCompile Include="SkillItems.cpp" />
     <ClCompile Include="SkillMenu.cpp" />
+    <ClCompile Include="Warden.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Collision.h" />
-    <ClInclude Include="Dialogue.h" />
+    <ClInclude Include="guardDialogue.h" />
     <ClInclude Include="Furniture.h" />
     <ClInclude Include="furnitureInv.h" />
     <ClInclude Include="Guard.h" />
@@ -189,10 +191,12 @@
     <ClInclude Include="OptionsMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Prisoner.h" />
+    <ClInclude Include="prisonerDialogue.h" />
     <ClInclude Include="prisonWalls.h" />
     <ClInclude Include="Routine.h" />
     <ClInclude Include="SkillItems.h" />
     <ClInclude Include="SkillMenu.h" />
+    <ClInclude Include="Warden.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Map1.txt" />

@@ -12,7 +12,7 @@ SkillItems::~SkillItems()
 }
 
 void SkillItems::WeightsBench(sf::RenderWindow &window) {
-	if (!weightsTexture.loadFromFile("../assets/image_assets/WeightsBench.png")) {
+	if (!weightsTexture.loadFromFile("../assets/image_assets/Furniture/WeightsBench.png")) {
 		std::cout << "Load fail Error on weights bench" << std::endl;
 		system("pause");
 
@@ -42,7 +42,7 @@ void SkillItems::WeightsBench(sf::RenderWindow &window) {
 	}
 }
 void SkillItems::ExercBike(sf::RenderWindow &window) {
-	if (!bikeTexture.loadFromFile("../assets/image_assets/Bike.png")) {
+	if (!bikeTexture.loadFromFile("../assets/image_assets/Furniture/Bike.png")) {
 		std::cout << "Load fail Error on bike texture" << std::endl;
 		system("pause");
 

@@ -2,40 +2,59 @@
 #include <SFML\Audio.hpp>
 #include <cstdlib>
 
-#include "Menu.h"
-#include "SkillMenu.h"
-#include "Player.h"
 #include "Background.h"
 #include "HUD.h"
-#include "mapLoader.h"
-#include "Furniture.h"
-#include "Prisoner.h"
-#include "Guard.h"
+#include "Menu.h"
+#include "SkillMenu.h"
+
 #include "SkillItems.h"
 #include "OptionsMenu.h"
 #include "Instructions.h"
+
+#include "Player.h"
+#include "Prisoner.h"
+#include "Guard.h"
+#include "Warden.h"
+
+
+#include "mapLoader.h"
+#include "Furniture.h"
 #include "prisonWalls.h"
-#include "Dialogue.h"
+
 #include "furnitureInv.h"
 
-enum GameState { StartMenu, SkillsMenu, Options, Game, InstructionsMenu };
+#include "Collision.h"
+#include "prisonerDialogue.h"
+#include "guardDialogue.h"
 
+/*TODO - 
+Physics: Particle emitter for shower water, Collision for wall and floor vectors
+Characters: 2 Nurse Characters, make multiple instances of prisoner and guards
+HUDItems: Finish the Instructions Menu, Crafting menu needs to be implemented, MouseHander for HUDItems, including start menu
+Objects: Make Skill Item furniture have collision and make them increment skill on use
+AI: Path Finding Algorithm A* - Use on all characters, use the given states in the class to change their behavior
+*/
+
+
+enum GameState { StartMenu, SkillsMenu, Options, Game, InstructionsMenu };
+enum dialogueState { prisonerTalk, guardTalk, prisonerMissions, guardMissions, snitching, prisonerTrade, dialogueMenu, noState };
 
 int GameState = StartMenu;
 
 float musicVolume;
-
+bool prisonAction = false;
+bool guardAction = false;
 
 sf::Vector2i ScreenSize(800, 600);
 sf::Vector2f pos(ScreenSize.x / 2, ScreenSize.y / 2); // halving the screen size to set the centre of screen as the movement position
 
 int main()
 {
-
+	int dialogueState = noState; // setting it to no state, as not interacted with prisoner or guard yet
 	sf::Vector2f playerStartPos(100.0f, 100.f);
 
 	sf::Vector2i ScreenSize(800, 600);
-	
+	sf::Vector2f direction;
 	sf::RenderWindow window(sf::VideoMode(ScreenSize.x, ScreenSize.y), "Prison Escape Game");
 
 
@@ -55,12 +74,20 @@ int main()
 
 	Furniture furniture;
 	SkillItems skillitems;
-	Player player;
-	Prisoner prisoner;
-	Guard guard;
+	
+
+
+	Player player(sf::Vector2f(32,32), sf::Vector2f(150, 150));
+	Prisoner prisoner(sf::Vector2f(32, 32), sf::Vector2f(200, 150));
+	Guard guard(sf::Vector2f(32, 32), sf::Vector2f(150, 250));
+	Warden warden(sf::Vector2f(32, 32), sf::Vector2f((40*64), (20*64)));
+
 	prisonWalls walls;
-	Dialogue dialogue;
+	
 	furnitureInv furninv;
+
+	
+
 
 	sf::SoundBuffer soundBuffer; // sound buffer
 	sf::Music menuMusic; // backgroundMusic
@@ -77,18 +104,114 @@ int main()
 	view.reset(sf::FloatRect(0, 0, ScreenSize.x, ScreenSize.y));
 	view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f)); // from the left point(start point to width scale), top(start to screen height scale), screen width scale, screen height scale
 
+	prisonerDialogue prisonD;
+	guardDialogue guardD;
 
 
 	view.zoom(1.0f); // zooming out - FOR DEBUG
-	
+
 	while (window.isOpen())
 	{
+	
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
+
 			switch(event.type)
 				{
 			case sf::Event::KeyPressed:
+				if (GameState == Game) {
+					if (player.getCollision().collision(prisoner.getCollision(), 1.0f, direction)) { // player collision with prisoner
+						player.onCollision(direction);
+						prisoner.onCollision(direction);
+						if (sf::Keyboard::Key::E == event.key.code) {
+							prisonAction = true; // boolean to draw dialogue menu
+							dialogueState = dialogueMenu; // setting the state for the dialogue
+							prisonerState::prisonerStop; // stopping the prisoner from moving
+						}
+					}
+					else {
+						prisonerState::IDLE; // making the prisoner go back to idle after interaction
+					}
+					if (player.getCollision().collision(guard.getCollision(), 1.0f, direction)) { // player collision with guard
+						player.onCollision(direction);
+						if (sf::Keyboard::Key::E == event.key.code) {
+							guardAction = true; // boolean to draw dialogue menu 
+							dialogueState = dialogueMenu;// setting the state for the dialogue
+							guardState::guardStop; // stopping the guard from moving
+						}
+					}
+					else {
+						guardState::guardIDLE;// making the guard go back to idle after interaction
+					}
+
+					if (player.getCollision().collision(warden.getCollision(), 1.0f, direction)) { // player collision with guard
+						player.onCollision(direction);
+						warden.onCollision(direction);
+					}
+
+					if (prisoner.getCollision().collision(guard.getCollision(), 1.0f, direction)) { // player collision with guard
+						prisoner.onCollision(direction);
+						guard.onCollision(direction);
+					}
+
+					if (player.getCollision().collision(walls.getCollision(), 0.0f, direction)) { // player collision with walls
+						player.onCollision(direction);
+						//walls.onCollision(direction);
+					}
+
+				}
+
+
+			
+
+				if (prisonAction == true) {
+					if (sf::Keyboard::Key::Up == event.key.code) {
+						prisonD.Up();
+					}
+					if (sf::Keyboard::Key::Down == event.key.code) {
+						prisonD.Down();
+					}
+					if (sf::Keyboard::Key::Return == event.key.code) {
+						switch (prisonD.GetPressedItem()) {
+						case 0: std::cout << "Talk" << std::endl;
+							dialogueState = prisonerTalk; // setting the state to prisoner talk
+							
+							break;
+						case 1: std::cout << "Trade" << std::endl;
+							dialogueState = prisonerTrade;// setting the state to prisoner trade
+							break;
+						case 2: std::cout << "Missions" << std::endl;
+							dialogueState = prisonerMissions;// setting the state to prisoner missions
+							break;
+						
+						}
+					}
+				}
+				if (guardAction == true) {
+					if (sf::Keyboard::Key::Up == event.key.code) {
+						guardD.Up();
+					}
+					if (sf::Keyboard::Key::Down == event.key.code) {
+						guardD.Down();
+					}
+					if (sf::Keyboard::Key::Return == event.key.code) {
+						switch (guardD.GetPressedItem()) {
+						case 0: std::cout << "Talk" << std::endl;
+							dialogueState = guardTalk; // setting the state to guard talk
+							break;
+						case 1: std::cout << "Snitch" << std::endl;
+							dialogueState = snitching; // setting the state to snitching
+							break;
+						case 2: std::cout << "Missions" << std::endl;
+							dialogueState = guardMissions; //setting the state to guard missions
+							break;
+						
+						}
+					}
+				}
+
+
 				if (GameState == StartMenu)
 				{
 					if (sf::Keyboard::Key::Up == event.key.code) {
@@ -284,6 +407,9 @@ int main()
 								}
 							}
 						}
+				
+				
+
 				if (GameState == InstructionsMenu) {
 					if (sf::Keyboard::Key::Up == event.key.code) {
 						instructions.Up();
@@ -358,6 +484,8 @@ int main()
 			skillmenu.draw(window);
 		}
 
+		
+
 		view.setCenter(pos); 
 		
 		//setting the position of the bars in the HUD file
@@ -368,11 +496,7 @@ int main()
 		//drawing 
 		if (GameState == Game)
 		{
-			//std::cout << "Player Movement: X = " << player.CharPosition.x << "; Y = " << player.CharPosition.y << std::endl;
-			//std::cout << "Player Position - X: " << player.posX << ", Y:" << player.posY << std::endl;
-			//std::cout << "Guard Position - X: " << guard.posX << ", Y:" << guard.posY << std::endl;
-			//std::cout << "Prisoner Position - X: " << prisoner.posX << ", Y:" << prisoner.posY << std::endl;
-
+		
 			menuMusic.pause(); // pause that funky music
 		//	background.drawBackground(window);
 			map.drawMap(window);
@@ -396,18 +520,15 @@ int main()
 			skillitems.WeightsBench(window);
 			skillitems.ExercBike(window);
 
-			player.drawPlayer(view, window);
+			player.playerKeyboardMovement(view, window);
 			
 		//	furninv.drawFootLocker(view, window);
 
-			//TEST FOR DIALOGUE
-			if (dialogue.dialogueOpen == true) {
-				dialogue.drawDialogue(view, window);
-			}
-			//END TEST FOR DIALOGUE
+		
+
 
 			prisoner.drawPrisoner(window);
-
+			warden.drawWarden(window);
 			guard.drawGuard(window);
 			
 			
@@ -430,9 +551,78 @@ int main()
 				hud.drawCraft(view, window);
 			}
 
+			//BOTH GUARD AND PRISONER_______________________________
+			if (dialogueState == dialogueMenu) {
+				if (prisonAction == true) {
+					guardAction = false;
+					prisonD.drawDialogueBox(view, window);
+					prisonD.draw(view, window);
+					if (sf::Keyboard::Key::X == event.key.code) {
+						dialogueState = noState;
+						
+					}
+				}
+			
+				 if (guardAction == true) {
+					prisonAction = false;
+					guardD.drawDialogueBox(view, window);
+					guardD.draw(view, window);
+					if (sf::Keyboard::Key::X == event.key.code) {
+						dialogueState = noState;
+					}
+				 }
+				
+			}
+			//PRISONER_______________________________________________
+			if (dialogueState == prisonerTalk) {
+				prisonD.drawDialogueBox(view, window);
+				prisonD.Talk(view, window);
+				guardD.prisonInfo = 1;
+				if (sf::Keyboard::Key::X == event.key.code) {
+					dialogueState = noState;
+				}
+			}
+			if (dialogueState == prisonerTrade) {
+				prisonD.drawDialogueBox(view, window);
+				prisonD.Trade(view, window);
+				if (sf::Keyboard::Key::X == event.key.code) {
+					dialogueState = noState;
+				}
+			}
+			if (dialogueState == prisonerMissions) {
+				prisonD.drawDialogueBox(view, window);
+				prisonD.Mission(view, window);
+				if (sf::Keyboard::Key::X == event.key.code) {
+					dialogueState = noState;
+				}
+			}
+			//GUARD___________________________________________________
+			if (dialogueState == guardTalk) {
+				guardD.drawDialogueBox(view, window);
+				guardD.Talk(view, window);
+				if (sf::Keyboard::Key::X == event.key.code) {
+					dialogueState = noState;
+				}
+			}
+			if (dialogueState == snitching) {
+				guardD.drawDialogueBox(view, window);
+				guardD.Snitch(view, window);
+				if (sf::Keyboard::Key::X == event.key.code) {
+					dialogueState = noState;
+				}
+			}
+			if (dialogueState == guardMissions) {
+				guardD.drawDialogueBox(view, window);
+				guardD.Mission(view, window);
+				if (sf::Keyboard::Key::X == event.key.code) {
+					dialogueState = noState;
+				}
+			}
+
 		}
 
 		
+	
 
 		int LightFlicker = rand()% 10;
 		for (int x = 1; x < 256; x++) {

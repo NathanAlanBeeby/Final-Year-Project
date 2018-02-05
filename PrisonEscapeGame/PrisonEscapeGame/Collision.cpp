@@ -4,10 +4,11 @@ using namespace std;
 
 Collision::Collision(sf::RectangleShape& body) :
 	body(body) //initializer list
+	
 {
 }
 
-bool Collision::onCollision(Collision &object, float mass, sf::Vector2f& dir)
+bool Collision::collision(Collision & object, float mass, sf::Vector2f& dir)
 {
 	sf::Vector2f objectPos = object.GetPosition();
 	sf::Vector2f objectHalfExtent = object.GetHalfExtent();
@@ -66,3 +67,4 @@ bool Collision::onCollision(Collision &object, float mass, sf::Vector2f& dir)
 	//therefore this is between 0 and 1
 	return false;
 }
+

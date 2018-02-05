@@ -4,32 +4,27 @@
 #include "HUD.h"
 #include "Collision.h"
 
-
-enum prisonerState { IDLE, prisonerAngry, DESTINATION, CHASE }; // moving idly, walking to destination, and chasing the player
+enum prisonerState { IDLE, prisonerStop, prisonerAngry, DESTINATION, CHASE }; // moving idly, walking to destination, and chasing the player
 
 class Prisoner
 {
 public:
-	Prisoner();
+	Prisoner(sf::Vector2f size, sf::Vector2f position);
 	~Prisoner();
-	enum PrisonerDir { Up, Right, Down, Left, Idle };
-
-	PrisonerDir lastPrisonerPosition = Down;
+	
 	HUD hud;
 
 
-	//TESTING FOR COLLISION
-	sf::Vector2f GetPosition() { return body.getPosition(); }
-	Collision GetCollision() { return Collision(body); }
-	//TESTING FOR COLLISION
-
-
+	float moveSpeed = 15;
+	sf::Vector2f vel;
 
 
 	sf::Texture prisonerTexture;
-	sf::Sprite prisonerSprite;
+	sf::RectangleShape prisonerSprite;
 
-	sf::Vector2f prisonerPosition;
+	sf::Vector2f getPosition() { return prisonerSprite.getPosition(); }
+
+	Collision getCollision() { return Collision(prisonerSprite); }
 
 	//void Collision(sf::Vector2f prisonerPosition, sf::Vector2f Size);
 	float Speed = 7.5;
@@ -41,8 +36,7 @@ public:
 
 	void drawPrisoner(sf::RenderWindow &window);
 	void prisonerState();
-	void movePrisoner(char direction, float moveSpeed);
-private:
-	sf::RectangleShape body;
+	void onCollision(sf::Vector2f direction);
+
 };
 
